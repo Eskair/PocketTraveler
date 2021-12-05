@@ -7,28 +7,36 @@ import {
   Geography,
   Graticule,
 } from "react-simple-maps";
-import "react-tippy/dist/tippy.css";
-import { Tooltip } from "react-tippy";
+import { Motion, spring } from "react-motion";
+import { geoPath } from "d3-geo";
+import { geoTimes } from "d3-geo-projection";
 
-const mapData = require("../assets/110m.json");
-const mapCountryTranslate = require("../assets/ISO_country_names.json");
+const mapData = require("../assets/world-110m.json");
 
 const mapStyles = {
-  width: "600px",
+  width: "800px",
   height: "auto",
 };
 
-const MenuGlobe = () => {
-  const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
+const MenuGlobe = ({ setTooltipContent }) => {
+  const [center, setCenter] = useState([0, 0]);
   const [ttCountry, setttCountry] = useState(null);
-
-  console.log(ttCountry);
 
   const handleClick = (e, coor) => {
     setttCountry(e);
   };
 
-  const handleToolT = (e) => {};
+  const projection = () => {
+    return geoTimes()
+      .translate([800 / 2, 450 / 2])
+      .scale(160);
+  };
+
+  const handleGeographyClick = (geography) => {
+    const path = geoPath().projection(projection());
+    const centroid = projection().invert(path.centroid(geography));
+    setCenter(centroid);
+  };
 
   return (
     <Wrapper>
@@ -39,7 +47,7 @@ const MenuGlobe = () => {
         projectionConfig={{ scale: 220 }}
         style={mapStyles}
       >
-        <ZoomableGlobe>
+        <ZoomableGlobe center={center}>
           <circle
             cx={250}
             cy={250}
@@ -48,16 +56,12 @@ const MenuGlobe = () => {
             stroke="#CFD8DC"
           />
           <Graticule globe={true} />
-          <Geographies
-            disableOptimization
-            // geography="https://unpkg.com/world-atlas@1.1.4/world/110m.json"
-            geography={mapData}
-          >
+          <Geographies disableOptimization geography={mapData}>
             {(geos, proj) =>
               geos.map((geo, i) => {
                 return (
                   <Geography
-                    key={geo.id + i}
+                    key={geo.properties.ISO_A3 + i}
                     geography={geo}
                     projection={proj}
                     style={{
@@ -67,28 +71,30 @@ const MenuGlobe = () => {
 
                         strokeWidth: 0.75,
                         outline: "none",
-                        // transition: "all 250ms",
                       },
                       hover: {
                         fill: "#FF6F61",
                         stroke: "#9E1030",
                         strokeWidth: 0.75,
                         outline: "none",
-                        // transition: "all 250ms"
                       },
                       pressed: {
                         fill: "#DD4132",
                         stroke: "#9E1030",
                         strokeWidth: 0.75,
                         outline: "none",
-                        // transition: "all 250ms"
                       },
                     }}
-                    onClick={() => {
-                      handleClick(geo.id, geo.geometry.coordinates);
-                    }}
+                    data-tip
+                    data-for="countryTip"
                     onMouseEnter={() => {
-                      handleToolT(geo.id);
+                      const { NAME } = geo.properties;
+
+                      setTooltipContent(`${NAME}`);
+                    }}
+                    onClick={(e) => {
+                      handleClick(geo.properties.ISO_A3, geo);
+                      handleGeographyClick(geo);
                     }}
                   />
                 );
