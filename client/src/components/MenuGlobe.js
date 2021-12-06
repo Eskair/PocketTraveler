@@ -14,7 +14,7 @@ import { geoTimes } from "d3-geo-projection";
 const mapData = require("../assets/world-110m.json");
 
 const mapStyles = {
-  width: "800px",
+  width: "600px",
   height: "auto",
 };
 
@@ -111,6 +111,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 20px;
 `;
 export default MenuGlobe;
