@@ -1,12 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
-
+import GlobalStyles from "./components/GlobalStyles";
 import Home from "./components/Home";
+import Header from "./components/Header";
 
 const App = () => {
   return (
     <Wrapper>
+      <GlobalStyles />
+      <Header />
       <Router>
         <Switch>
           <Route exact path="/">
@@ -24,8 +27,14 @@ const App = () => {
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  position: relative;
+  margin: auto;
+  width: 70%;
+
+  background-color: #e1eaf0;
+  height: 100vh;
 `;
 
 export default App;

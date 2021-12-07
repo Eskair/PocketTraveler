@@ -3,15 +3,19 @@ import styled from "styled-components";
 import MenuGlobe from "./MenuGlobe";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
+import CategoriesWF from "./CategoriesWF";
 
 const Home = () => {
   const [content, setContent] = useState("");
-
-  useEffect(() => {
-    // console.log(content);
-  });
+  const [wfCateg, setWfcateg] = useState("");
+  // console.log(content);
+  useEffect(() => {});
   return (
     <Wrapper>
+      <HomeDiv>
+        <CategoriesWF setWfcateg={setWfcateg} />
+        <HomeHead>Word FactBook</HomeHead>
+      </HomeDiv>
       <MenuGlobe setTooltipContent={setContent} />
       <ReactTooltipStyled
         key={uuidv4()}
@@ -26,11 +30,25 @@ const Home = () => {
 };
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
+  flex-direction: column;
+  display: flex;
+  justify-content: flex-start;
+
+  height: 100%;
 `;
 
 const HomeDiv = styled.div`
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+const HomeHead = styled.h1`
+  font-family: var(--font-heading);
+  color: #486070;
+  font-size: 25px;
 `;
 
 const ReactTooltipStyled = styled(ReactTooltip)`

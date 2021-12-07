@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+
+import styled, { keyframes } from "styled-components";
 import {
   ComposableMap,
   ZoomableGlobe,
@@ -7,7 +8,7 @@ import {
   Geography,
   Graticule,
 } from "react-simple-maps";
-import { Motion, spring } from "react-motion";
+
 import { geoPath } from "d3-geo";
 import { geoTimes } from "d3-geo-projection";
 
@@ -21,9 +22,21 @@ const mapStyles = {
 const MenuGlobe = ({ setTooltipContent }) => {
   const [center, setCenter] = useState([0, 0]);
   const [ttCountry, setttCountry] = useState(null);
+  const [clickFlag, setClickFlag] = useState(1);
+  const [clickedCountry, setClickedCountry] = useState("");
 
   const handleClick = (e, coor) => {
     setttCountry(e);
+    if (e === ttCountry) {
+      setClickFlag(clickFlag + 1);
+    }
+
+    console.log(e);
+  };
+
+  const handleClickTwo = (geo) => {
+    setClickedCountry(geo.properties.ISO_A3);
+    // setClickFlag(!clickFlag);
   };
 
   const projection = () => {
@@ -36,8 +49,11 @@ const MenuGlobe = ({ setTooltipContent }) => {
     const path = geoPath().projection(projection());
     const centroid = projection().invert(path.centroid(geography));
     setCenter(centroid);
-  };
 
+    // setClickFlag(!clickFlag);
+    // redirect to Coyntry profile page
+  };
+  console.log(clickFlag);
   return (
     <Wrapper>
       <ComposableMap
@@ -52,13 +68,17 @@ const MenuGlobe = ({ setTooltipContent }) => {
             cx={250}
             cy={250}
             r={220}
-            fill="transparent"
+            fill="white"
+            opacity="0.5"
             stroke="#CFD8DC"
+            strokeWidth="0.2"
           />
-          <Graticule globe={true} />
+          <Graticule globe={true} strokeWidth="0.1" />
           <Geographies disableOptimization geography={mapData}>
             {(geos, proj) =>
               geos.map((geo, i) => {
+                const isClicked = clickedCountry === geo.properties.ISO_A3;
+
                 return (
                   <Geography
                     key={geo.properties.ISO_A3 + i}
@@ -66,22 +86,21 @@ const MenuGlobe = ({ setTooltipContent }) => {
                     projection={proj}
                     style={{
                       default: {
-                        fill: "#DD4132",
-                        stroke: "#9E1030",
-
-                        strokeWidth: 0.75,
+                        fill: !isClicked ? "#82cdff" : "#f2d35f",
+                        stroke: "#22A3FA",
+                        strokeWidth: 0.5,
                         outline: "none",
                       },
                       hover: {
-                        fill: "#FF6F61",
-                        stroke: "#9E1030",
-                        strokeWidth: 0.75,
+                        fill: "#F2DB83",
+                        stroke: "#22A3FA",
+                        strokeWidth: 0.3,
                         outline: "none",
                       },
                       pressed: {
-                        fill: "#DD4132",
-                        stroke: "#9E1030",
-                        strokeWidth: 0.75,
+                        fill: "#ffc26f",
+                        stroke: "#22A3FA",
+                        strokeWidth: 0.3,
                         outline: "none",
                       },
                     }}
@@ -95,6 +114,7 @@ const MenuGlobe = ({ setTooltipContent }) => {
                     onClick={(e) => {
                       handleClick(geo.properties.ISO_A3, geo);
                       handleGeographyClick(geo);
+                      handleClickTwo(geo);
                     }}
                   />
                 );
@@ -111,6 +131,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 20px;
 `;
+
 export default MenuGlobe;
