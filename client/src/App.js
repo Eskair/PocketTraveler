@@ -31,9 +31,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   position: relative;
   margin: auto;
-  width: 70%;
+  width: 75%;
+  min-width: 1000px;
 
-  background-color: #e1eaf0;
+  background-color: rgba(18, 43, 63, 1);
   height: 100vh;
 `;
 

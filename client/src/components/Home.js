@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import MenuGlobe from "./MenuGlobe";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 import CategoriesWF from "./CategoriesWF";
 
 const Home = () => {
-  const [content, setContent] = useState("");
-  const [wfCateg, setWfcateg] = useState("");
-  // console.log(content);
-  useEffect(() => {});
+  const [content, setContent] = useState(""); // -> state sets ToolTips content
+  const [wfCateg, setWfcateg] = useState(""); // -> state sets current category, which sets in CategoriesWF
+  const [wfCategName, setWfcategName] = useState(""); // -> state sets current category name, which sets in CategoriesWF
+  const [wfCategUnits, setWfCategUnits] = useState(""); // -> state sets current category units, which sets in CategoriesWF
+
   return (
     <Wrapper>
       <HomeDiv>
-        <CategoriesWF setWfcateg={setWfcateg} />
-        <HomeHead>Word FactBook</HomeHead>
+        <CategoriesWF setWfcateg={setWfcateg} setWfcategName={setWfcategName} />
+        <HomeHead>{wfCateg ? wfCategName : "The World Factbook"}</HomeHead>
       </HomeDiv>
-      <MenuGlobe setTooltipContent={setContent} />
+      <MenuGlobe
+        setTooltipContent={setContent}
+        wfCateg={wfCateg}
+        setWfCategUnits={setWfCategUnits}
+        wfCategUnits={wfCategUnits}
+      />
       <ReactTooltipStyled
         key={uuidv4()}
         id="countryTip"
@@ -41,14 +48,17 @@ const Wrapper = styled.div`
 
 const HomeDiv = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 50px;
 `;
 const HomeHead = styled.h1`
   font-family: var(--font-heading);
-  color: #486070;
-  font-size: 25px;
+  color: #e1eaf0;
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0;
 `;
 
 const ReactTooltipStyled = styled(ReactTooltip)`

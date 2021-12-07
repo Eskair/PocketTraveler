@@ -26,17 +26,20 @@ ISO_names.forEach((country) => {
           population: {
             population: countries[key].data.people?.population.total,
             title: "Total Population",
+            units: "Inhabitants",
             graphType: "worldFacts",
           },
           medianAge: {
-            medianAge: countries[key].data.people?.median_age?.total,
+            medianAge: countries[key].data.people?.median_age?.total.value,
             title: "Median Age",
+            units: "Years",
             graphType: "worldFacts",
           },
           population_growth_rate: {
             population_growth_rate:
               countries[key].data.people?.population_growth_rate.growth_rate,
             title: "Population Growth Rate",
+            units: "%",
             graphType: "worldFacts",
           },
           birth_rate: {
@@ -44,6 +47,7 @@ ISO_names.forEach((country) => {
               countries[key].data.people?.birth_rate
                 ?.births_per_1000_population,
             title: "Birth Rate",
+            units: "Birth Per 1000 Population",
             graphType: "worldFacts",
           },
           death_rate: {
@@ -51,6 +55,7 @@ ISO_names.forEach((country) => {
               countries[key].data.people?.death_rate
                 ?.deaths_per_1000_population,
             title: "Death Rate",
+            units: "Deaths Per 1000 Population",
             graphType: "worldFacts",
           },
           sex_ratio: {
@@ -114,8 +119,9 @@ ISO_names.forEach((country) => {
             graphType: "worldFacts",
           },
           gdpPc: {
-            gdp: countries[key].data.economy.gdp
-              ?.per_capita_purchasing_power_parity?.annual_values[0].value,
+            gdpPc:
+              countries[key].data.economy.gdp
+                ?.per_capita_purchasing_power_parity?.annual_values[0].value,
             units: "USD",
             title: "GDP Per Capita PPP",
             graphType: "worldFacts",

@@ -2,7 +2,7 @@
 
 const express = require("express");
 const morgan = require("morgan");
-const { getCategories } = require("./handlers");
+const { getCategories, getCountry } = require("./handlers");
 const PORT = 8000;
 
 express()
@@ -11,7 +11,8 @@ express()
 
   .use(express.static("public"))
 
-  .get("/api/worldbook-categories", getCategories)
+  .get("/api/worldbook-categories", getCategories) // api to get a list of categories for CategoriesWF.js
+  .get("/api/worldbook-category/:categoryKey", getCountry) // api to get a single country data acc. to category key
 
   .get("*", (req, res) => {
     res.status(404).json({

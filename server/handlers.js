@@ -45,7 +45,45 @@ const getCategories = async (req, res) => {
   console.log("disconnected!");
 };
 
+const getCountry = async (req, res) => {
+  const { categoryKey } = req.params;
+  console.log(categoryKey);
+
+  const client = new MongoClient(MONGO_URI, options);
+  await client.connect();
+  try {
+    const db = client.db("WorldFactbook");
+    console.log("connected!");
+    const categoryArr = await db.collection("2020").find().toArray();
+    const categoryData = [];
+
+    categoryArr.forEach((cat) => {
+      if (cat.data[categoryKey].graphType === "worldFacts") {
+        categoryData.push({
+          id: `${cat.alpha_3}`,
+          val: `${cat.data[categoryKey][categoryKey]}`,
+          units: `${cat.data[categoryKey].units}`,
+        });
+      }
+    });
+
+    if (categoryData.length > 0) {
+      res.status(200).json({
+        status: 200,
+        categoryData: categoryData,
+        message: "Categories Available",
+      });
+    } else {
+      res.status(404).json({ status: 404, message: "Categories Not Found" });
+    }
+  } catch (err) {
+    console.log(err.stack);
+  }
+  client.close();
+  console.log("disconnected!");
+};
+
 module.exports = {
   getCategories,
+  getCountry,
 };
-// "graphType": "worldFacts"

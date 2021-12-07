@@ -12,7 +12,7 @@ const Header = () => {
 const Wrapper = styled.header`
   display: flex;
   height: 75px;
-  background-color: #051c2c;
+  background-color: #e1eaf0;
 `;
 
 export default Header;

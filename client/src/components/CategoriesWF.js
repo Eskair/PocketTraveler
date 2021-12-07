@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 
 const CategoriesWF = (props) => {
-  const { setWfcateg } = props;
+  const { setWfcateg, setWfcategName } = props;
 
-  const [categories, setCategories] = useState(null);
-  const [error, setError] = useState(false);
+  const [categories, setCategories] = useState(null); // -> sets categories, fetched from mongoBD;
+  const [error, setError] = useState(false); // -> sets error state;
 
   useEffect(() => {
     fetch("/api/worldbook-categories", {
@@ -26,7 +26,10 @@ const CategoriesWF = (props) => {
   }, []);
 
   const handleChange = (value) => {
-    setWfcateg(value);
+    const valueArr = value.split(",");
+
+    setWfcategName(valueArr[1]);
+    setWfcateg(valueArr[0]);
   };
 
   if (categories !== null) {
@@ -39,7 +42,7 @@ const CategoriesWF = (props) => {
             let objValues = Object.values(Item);
 
             return (
-              <OptionSt key={uuidv4()} value={`${objKeys}`}>
+              <OptionSt key={uuidv4()} value={[`${objKeys}`, `${objValues}`]}>
                 {objValues}
               </OptionSt>
             );
@@ -59,14 +62,14 @@ const CategoriesWF = (props) => {
 const Wrapper = styled.div`
   position: absolute;
   display: flex;
-  left: 20px;
+  left: 40px;
 `;
 
 const SelectSt = styled.select`
-  background-color: #f2b3f1;
+  background-color: #e43b26;
   border: 0px solid #aaa;
   border-radius: 10px;
-  color: #486070;
+  color: white;
   font-size: 12px;
   margin: 0;
   overflow: hidden;
@@ -79,6 +82,7 @@ const SelectSt = styled.select`
 
 const OptionSt = styled.option`
   background-color: white;
+  color: black;
   font-family: var(--font-body);
 `;
 
