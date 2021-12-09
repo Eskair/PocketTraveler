@@ -167,7 +167,11 @@ const Choropleth = (props) => {
                         if (wfCateg === "gdp") {
                           valueFixed =
                             parseInt(parseInt(country?.val) / 1000000) + " M";
+                        } else {
+                          valueFixed = parseInt(country?.val);
                         }
+
+                        console.log();
                         const toolTips = `${NAME}: ${valueFixed} ${wfCategUnits}`;
                         const toolTipsNoData = `${NAME}: No Data`;
 

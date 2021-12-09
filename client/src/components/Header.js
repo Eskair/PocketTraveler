@@ -44,7 +44,7 @@ const UserDiv = styled.div`
 `;
 
 const LogoImg = styled.img`
-  width: 200px;
+  width: 250px;
 `;
 
 const HomeDivLink = styled(NavLink)`
