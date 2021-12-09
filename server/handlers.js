@@ -61,6 +61,8 @@ const getCountry = async (req, res) => {
       if (cat.data[categoryKey].graphType === "worldFacts") {
         categoryData.push({
           id: `${cat.alpha_3}`,
+          name: `${cat.name}`,
+          shortname: `${cat.shortname}`,
           val: `${cat.data[categoryKey][categoryKey]}`,
           units: `${cat.data[categoryKey].units}`,
         });

@@ -11,7 +11,7 @@ const options = {
 
 const { ISO_names } = require("./data/ISO_country_names.js");
 const { countries } = require("./data/2020-09-21_factbook.json");
-//console.log(Object.keys(countries));
+
 const countrInfo = [];
 
 ISO_names.forEach((country) => {
@@ -22,6 +22,8 @@ ISO_names.forEach((country) => {
         alpha_3: alpha_3,
         country_code: country_code,
         name: name,
+        shortname:
+          countries[key].data.government.country_name.conventional_short_form,
         data: {
           population: {
             population: countries[key].data.people?.population.total,
@@ -147,7 +149,7 @@ ISO_names.forEach((country) => {
             mobile_cellular:
               countries[key].data.communications?.telephones?.mobile_cellular
                 ?.subscriptions_per_one_hundred_inhabitants,
-            units: "%",
+            units: "Subscriptions / 100 Inhabitants",
             title: "Mobile Phones Subscriptions",
             graphType: "worldFacts",
           },
@@ -250,7 +252,7 @@ const getData = async () => {
     const db = client.db("WorldFactbook");
     console.log("connected!");
     const result = await db.collection("2020").insertMany(countrInfo);
-    // const result1 = await db.collection("reservation").insertMany(reservations);
+
     console.log(result.insertedCount, "Units Inserted");
   } catch (err) {
     console.log(err.stack);

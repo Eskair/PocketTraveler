@@ -14,7 +14,7 @@ import { geoTimes } from "d3-geo-projection";
 
 import Choropleth from "./Choropleth";
 
-const mapData = require("../assets/world-110m.json");
+const mapData = require("../assets/world-110m.json"); //-> geoJSON for country maps layer
 
 const mapStyles = {
   width: "600px",
@@ -26,6 +26,7 @@ const MenuGlobe = ({
   wfCateg,
   setWfCategUnits,
   wfCategUnits,
+  wfCategName,
 }) => {
   const [center, setCenter] = useState([0, 0]); // -> state sets center coordinates
   const [ttCountry, setttCountry] = useState(null); // -> state sets current country for ToolTips
@@ -39,9 +40,10 @@ const MenuGlobe = ({
   };
 
   const handleClickTwo = (geo) => {
-    setClickedCountry(geo.properties.ISO_A3);
+    setClickedCountry(geo.properties.ISO_A3); // -> function sets ClickedCountry
   };
 
+  //-------------------------------- Two functions get centroid fron svg and centered it on screen
   const projection = () => {
     return geoTimes()
       .translate([800 / 2, 450 / 2])
@@ -50,13 +52,14 @@ const MenuGlobe = ({
 
   const handleGeographyClick = (geography, country) => {
     if (clickedCountry === country) {
-      history.push(`/${clickedCountry}`);
+      history.push(`/Country/${clickedCountry}`);
     } else {
       const path = geoPath().projection(projection());
       const centroid = projection().invert(path.centroid(geography));
       setCenter(centroid);
     }
   };
+  //----------------------------------------------------------------------------------------------------
 
   if (wfCateg === "") {
     return (
@@ -73,12 +76,12 @@ const MenuGlobe = ({
               cx={250}
               cy={250}
               r={220}
-              fill="white"
+              fill="#e1eaf0"
               opacity="1"
               stroke="#CFD8DC"
               strokeWidth="0.2"
             />
-            <Graticule globe={true} strokeWidth="0.1" />
+            <Graticule globe={true} strokeWidth="0.1" stroke="#CFD8DC" />
             <Geographies disableOptimization geography={mapData}>
               {(geos, proj) =>
                 geos.map((geo, i) => {
@@ -142,6 +145,7 @@ const MenuGlobe = ({
           wfCateg={wfCateg}
           setWfCategUnits={setWfCategUnits}
           wfCategUnits={wfCategUnits}
+          wfCategName={wfCategName}
         />
       </Wrapper>
     );

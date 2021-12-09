@@ -23,6 +23,7 @@ const Home = () => {
         wfCateg={wfCateg}
         setWfCategUnits={setWfCategUnits}
         wfCategUnits={wfCategUnits}
+        wfCategName={wfCategName}
       />
       <ReactTooltipStyled
         key={uuidv4()}
@@ -42,8 +43,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   display: flex;
   justify-content: flex-start;
-
-  height: 100%;
 `;
 
 const HomeDiv = styled.div`

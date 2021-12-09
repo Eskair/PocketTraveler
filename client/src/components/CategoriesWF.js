@@ -37,6 +37,7 @@ const CategoriesWF = (props) => {
       <Wrapper>
         <SelectSt onChange={(ev) => handleChange(ev.target.value)}>
           <OptionSt value="">Select Field</OptionSt>
+          <OptionSt value={[""]}>The World Factbook</OptionSt>
           {categories.map((Item) => {
             let objKeys = Object.keys(Item);
             let objValues = Object.values(Item);

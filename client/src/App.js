@@ -4,18 +4,24 @@ import styled from "styled-components";
 import GlobalStyles from "./components/GlobalStyles";
 import Home from "./components/Home";
 import Header from "./components/Header";
+// import ProtectedRoute from "./components/auth0/ProtectedRoute";
+
+import CountryInfo from "./components/CountryInfo";
 
 const App = () => {
   return (
     <Wrapper>
       <GlobalStyles />
-      <Header />
+
       <Router>
+        <Header />
         <Switch>
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="/Profile/:id"></Route>
+          <Route exact path="/Country/:clickedCountry">
+            <CountryInfo />
+          </Route>
           <Route exact path="/Notification"></Route>
           <Route exact path="/Bookmarks"></Route>
           <Route exact path="/:id"></Route>
@@ -34,7 +40,7 @@ const Wrapper = styled.div`
   width: 75%;
   min-width: 1000px;
 
-  background-color: rgba(18, 43, 63, 1);
+  background-color: var(--dark-blue);
   height: 100vh;
 `;
 

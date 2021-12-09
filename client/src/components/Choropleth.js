@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
+import Modal from "react-modal";
 import {
   ComposableMap,
   ZoomableGlobe,
@@ -10,6 +11,8 @@ import {
 } from "react-simple-maps";
 
 import { scaleLinear } from "d3-scale";
+
+import CountryTopList from "./CountryTopList";
 
 const mapData = require("../assets/world-110m.json");
 const mapStyles = {
@@ -27,12 +30,36 @@ const Choropleth = (props) => {
     wfCateg,
     setWfCategUnits,
     wfCategUnits,
+    wfCategName,
   } = props; // -> Props from MenuGlobe
 
   const [error, setError] = useState(false);
   const [choroplethData, setChoroplethData] = useState(null);
   const [minValue, setMinValue] = useState(null);
   const [maxValue, setMaxValue] = useState(null);
+
+  // -------------------------------------------------------------- React Modal
+  const [isOpen, setIsOpen] = useState(false);
+  Modal.setAppElement("#root");
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const customStyles = {
+    content: {
+      width: "100%",
+      height: "100%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "rgba(18, 43, 63, 1)",
+    },
+  };
+
+  //----------------------------------------------------------------
 
   useEffect(() => {
     if (wfCateg !== "") {
@@ -53,7 +80,7 @@ const Choropleth = (props) => {
         });
     }
   }, [wfCateg]);
-
+  // -> Calculates Min and Max values in Array
   useEffect(() => {
     if (choroplethData) {
       const minMaxValues = [];
@@ -93,9 +120,9 @@ const Choropleth = (props) => {
               cx={250}
               cy={250}
               r={220}
-              fill="white"
+              fill="#e1eaf0"
               opacity="1"
-              stroke="#CFD8DC"
+              stroke="#e1eaf0"
               strokeWidth="0.2"
             />
             <Graticule globe={true} strokeWidth="0.1" />
@@ -136,9 +163,19 @@ const Choropleth = (props) => {
                       data-for="countryTip"
                       onMouseEnter={() => {
                         const { NAME } = geo.properties;
-                        const toolTips = `${NAME}: ${country?.val} ${wfCategUnits}`;
+                        let valueFixed;
+                        if (wfCateg === "gdp") {
+                          valueFixed =
+                            parseInt(parseInt(country?.val) / 1000000) + " M";
+                        }
+                        const toolTips = `${NAME}: ${valueFixed} ${wfCategUnits}`;
+                        const toolTipsNoData = `${NAME}: No Data`;
 
-                        setTooltipContent(`${toolTips}`);
+                        if (country?.val !== "null") {
+                          setTooltipContent(`${toolTips}`);
+                        } else {
+                          setTooltipContent(`${toolTipsNoData}`);
+                        }
                       }}
                       onClick={(e) => {
                         handleClick(geo.properties.ISO_A3, geo);
@@ -152,6 +189,21 @@ const Choropleth = (props) => {
             </Geographies>
           </ZoomableGlobe>
         </ComposableMap>
+        <ButtonSt onClick={toggleModal}>Data Table</ButtonSt>
+        <Modal
+          style={customStyles}
+          isOpen={isOpen}
+          onRequestClose={toggleModal}
+          closeTimeoutMS={500}
+        >
+          <CountryTopList
+            choroplethData={choroplethData}
+            wfCateg={wfCateg}
+            wfCategUnits={wfCategUnits}
+            wfCategName={wfCategName}
+            toggleModal={toggleModal}
+          />
+        </Modal>
       </Wrapper>
     );
   } else {
@@ -164,9 +216,11 @@ const Choropleth = (props) => {
 };
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const StyledP = styled.p`
@@ -174,6 +228,25 @@ const StyledP = styled.p`
   font-size: 12px;
   font-family: var(--font-body);
   margin-left: 10px;
+`;
+
+const ButtonSt = styled.button`
+  background-color: #004e82;
+  border: 0px solid #aaa;
+  border-radius: 10px;
+  color: var(--light-gray);
+  font-size: 12px;
+  margin-top: 50px;
+  color: #82cdff;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  outline: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #006db6;
+  }
 `;
 
 export default Choropleth;
