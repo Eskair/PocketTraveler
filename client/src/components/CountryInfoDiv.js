@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const CountryInfoDiv = (props) => {
-  console.log(props);
   const {
     country_name: {
       country_name: {
@@ -113,7 +112,7 @@ const CountryInfoDiv = (props) => {
               <td>
                 <TdSpan>Natural Resources:</TdSpan>
               </td>
-              <td>{natural_resources.toString()}</td>
+              <td>{natural_resources.join(", ")}</td>
             </tr>
           </tbody>
           <tbody>
@@ -141,7 +140,7 @@ const Wrapper = styled.div`
 const CountryInfoGen = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
+  border-radius: 10px;
   background-color: var(--light-gray);
   width: 75%;
   top: 50px;
@@ -164,6 +163,7 @@ const TableSt = styled.table`
   margin: 0;
   border-spacing: 0;
   border-collapse: collapse;
+  table-layout: fixed;
 
   width: 100%;
 
@@ -171,6 +171,9 @@ const TableSt = styled.table`
     border-top: 1px dashed #b9c4cc;
     border-bottom: 1px dashed #b9c4cc;
     padding: 10px;
+    :nth-child(1) {
+      width: 25%;
+    }
   }
   tr {
   }

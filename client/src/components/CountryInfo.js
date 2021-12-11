@@ -3,8 +3,10 @@ import styled from "styled-components";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import * as d3 from "d3";
 import { useParams, NavLink } from "react-router-dom";
+import Modal from "react-modal";
 
 import CountryInfoDiv from "./CountryInfoDiv";
+import GraphsModal from "./GraphsModal";
 
 const CountryInfo = () => {
   const { clickedCountry } = useParams();
@@ -15,6 +17,29 @@ const CountryInfo = () => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
   });
+
+  // -------------------------------------------------------------- React Modal
+  const [isOpen, setIsOpen] = useState(false);
+  Modal.setAppElement("#root");
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const customStyles = {
+    content: {
+      width: "100%",
+      height: "100%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "rgba(18, 43, 63, 1)",
+    },
+  };
+
+  //----------------------------------------------------------------
 
   useEffect(() => {
     fetch(`api/worldbook-country/${clickedCountry}`, {
@@ -75,13 +100,6 @@ const CountryInfo = () => {
     height: "400px",
   };
 
-  // if (loadError) {
-  //   return "error loading maps";
-  // }
-  // if (!isLoaded) {
-  //   return <Loading />;
-  // }
-
   if (countryInfo !== null) {
     const {
       country_name: {
@@ -91,9 +109,6 @@ const CountryInfo = () => {
           etymology,
         },
       },
-      // capital: {
-      //   capital: { name, time_difference },
-      // },
     } = countryInfo;
 
     let scale = d3.scaleLinear().domain([0, 17098242]).range([5, 3]);
@@ -115,7 +130,7 @@ const CountryInfo = () => {
                 )
               : conventional_long_form}
           </HomeHead>
-          <ButtonSt>Data Table</ButtonSt>
+          <ButtonSt onClick={toggleModal}>Historical Data</ButtonSt>
         </CountryNameDiv>
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -127,6 +142,18 @@ const CountryInfo = () => {
           <></>
         </GoogleMap>
         <CountryInfoDiv countryInfo={countryInfo} />
+
+        <Modal
+          style={customStyles}
+          isOpen={isOpen}
+          onRequestClose={toggleModal}
+          closeTimeoutMS={500}
+        >
+          <GraphsModal
+            toggleModal={toggleModal}
+            clickedCountry={clickedCountry}
+          />
+        </Modal>
       </WrapperDiv>
     );
   } else {
@@ -174,21 +201,20 @@ const LoadingDiv = styled.div`
 `;
 
 const ButtonSt = styled.button`
-  background-color: #004e82;
+  background-color: var(--bright-orange);
   border: 0px solid #aaa;
   border-radius: 5px;
-  color: var(--light-gray);
   font-size: 12px;
-  margin-right: 45px;
-  color: #82cdff;
+  color: white;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 15px;
   padding-right: 15px;
+  margin: 10px 45px 10px 0px;
   outline: none;
   cursor: pointer;
   &:hover {
-    background-color: #006db6;
+    background-color: #d01e08;
   }
 `;
 export default CountryInfo;

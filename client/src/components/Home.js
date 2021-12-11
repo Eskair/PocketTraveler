@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MenuGlobe from "./MenuGlobe";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
+
 import CategoriesWF from "./CategoriesWF";
 
 const Home = () => {

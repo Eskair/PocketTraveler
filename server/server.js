@@ -6,7 +6,7 @@ const {
   getCategories,
   getCountry,
   getCountryInfo,
-  getApiKey,
+  getCountryInfoByYear,
 } = require("./handlers");
 const PORT = 8000;
 
@@ -17,9 +17,9 @@ express()
   .use(express.static("public"))
 
   .get("/api/worldbook-categories", getCategories) // api to get a list of categories for CategoriesWF.js
-  .get("/api/worldbook-category/:categoryKey", getCountry) // api to get a single country data acc. to category key
-  .get("/api/worldbook-country/:clickedCountry", getCountryInfo) // api to get a single country data acc. to clicked country
-  // .get("/api/google-maps", getApiKey) // api to get a Google Maps Key
+  .get("/api/worldbook-category/:categoryKey", getCountry) // api to get a single country data assosiated to category key
+  .get("/api/worldbook-country/:clickedCountry", getCountryInfo) // api to get a single country data assosiated. to clicked country
+  .get("/api/worldbook-year/:clickedCountry", getCountryInfoByYear) // api to get a single country data by Year assosiated to clicked country
 
   .get("*", (req, res) => {
     res.status(404).json({
