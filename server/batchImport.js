@@ -24,6 +24,23 @@ ISO_names.forEach((country) => {
         name: name,
         shortname:
           countries[key].data.government.country_name.conventional_short_form,
+        area: countries[key].data.geography.area.total.value,
+        latitude: {
+          latitude:
+            countries[key].data.geography.geographic_coordinates?.latitude
+              .degrees,
+          hemisphere:
+            countries[key].data.geography.geographic_coordinates?.latitude
+              .hemisphere,
+        },
+        longitude: {
+          longitude:
+            countries[key].data.geography.geographic_coordinates?.longitude
+              .degrees,
+          hemisphere:
+            countries[key].data.geography.geographic_coordinates?.longitude
+              .hemisphere,
+        },
         data: {
           population: {
             population: countries[key].data.people?.population.total,
@@ -246,13 +263,13 @@ ISO_names.forEach((country) => {
 });
 
 const getData = async () => {
+  // console.log(countrInfo);
   const client = new MongoClient(MONGO_URI, options);
   await client.connect();
   try {
     const db = client.db("WorldFactbook");
     console.log("connected!");
     const result = await db.collection("2020").insertMany(countrInfo);
-
     console.log(result.insertedCount, "Units Inserted");
   } catch (err) {
     console.log(err.stack);

@@ -171,7 +171,6 @@ const Choropleth = (props) => {
                           valueFixed = parseInt(country?.val);
                         }
 
-                        console.log();
                         const toolTips = `${NAME}: ${valueFixed} ${wfCategUnits}`;
                         const toolTipsNoData = `${NAME}: No Data`;
 
@@ -237,7 +236,7 @@ const StyledP = styled.p`
 const ButtonSt = styled.button`
   background-color: #004e82;
   border: 0px solid #aaa;
-  border-radius: 10px;
+  border-radius: 5px;
   color: var(--light-gray);
   font-size: 12px;
   margin-top: 50px;

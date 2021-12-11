@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -11,21 +11,10 @@ const CountryTopList = (props) => {
     return Item.val !== "null";
   });
 
-  // const choroplethDataFixed = choroplethDataNoNull.forEach((element) => {
-  //   if (wfCateg === "gdp") {
-  //     return parseInt(parseInt(element.val) / 1000000) + "M";
-  //   } else {
-  //     return parseInt(element.val);
-  //   }
-
-  // });
-
   let choroplethDatabyValue = choroplethDataNoNull.slice(0);
   choroplethDatabyValue.sort((a, b) => {
     return b.val - a.val;
   });
-
-  //   console.log(choroplethDatabyValue);
 
   return (
     <Wrapper>
@@ -38,7 +27,7 @@ const CountryTopList = (props) => {
         {choroplethDatabyValue.map((Item, Index) => {
           return (
             <CountListWrapper key={uuidv4()}>
-              <StCountryLink to={`/Country/${Item.id}`} key={uuidv4()}>
+              <StCountryLink to={`/${Item.id}`} key={uuidv4()}>
                 <CountListInfo>
                   <span>
                     {Item.name ===

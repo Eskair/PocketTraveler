@@ -4,7 +4,8 @@ export default createGlobalStyle`
   :root {
     --dark-blue:rgba(18, 43, 63, 1);
     --light-gray:#e1eaf0;
-    --light-blue:##82cdff;
+    --light-blue:#82cdff;
+    --bright-orange:#e43b26;
     --font-heading: 'Rufina', serif;;
     --font-body: 'Roboto', sans-serif;
     
@@ -28,7 +29,13 @@ export default createGlobalStyle`
       
   }
   
-  
+  body, html {
+  height: 100%;
+}
+
+  #root {
+    height: 100%;
+  }
 
  
 

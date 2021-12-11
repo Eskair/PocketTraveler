@@ -41,6 +41,8 @@ const LinkDiv = styled.div`
 
 const UserDiv = styled.div`
   display: flex;
+  justify-content: flex-end;
+  width: 100%;
 `;
 
 const LogoImg = styled.img`

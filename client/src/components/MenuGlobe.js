@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import {
   ComposableMap,
   ZoomableGlobe,
@@ -52,7 +52,7 @@ const MenuGlobe = ({
 
   const handleGeographyClick = (geography, country) => {
     if (clickedCountry === country) {
-      history.push(`/Country/${clickedCountry}`);
+      history.push(`/${clickedCountry}`);
     } else {
       const path = geoPath().projection(projection());
       const centroid = projection().invert(path.centroid(geography));

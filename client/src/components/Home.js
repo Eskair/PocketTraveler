@@ -43,6 +43,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   display: flex;
   justify-content: flex-start;
+  height: 100%;
 `;
 
 const HomeDiv = styled.div`

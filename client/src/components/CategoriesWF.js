@@ -69,7 +69,7 @@ const Wrapper = styled.div`
 const SelectSt = styled.select`
   background-color: #e43b26;
   border: 0px solid #aaa;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   font-size: 12px;
   margin: 0;
