@@ -17,7 +17,7 @@ import Choropleth from "./Choropleth";
 const mapData = require("../assets/world-110m.json"); //-> geoJSON for country maps layer
 
 const mapStyles = {
-  width: "600px",
+  width: "700px",
   height: "auto",
 };
 
@@ -156,7 +156,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 40px;
 `;
 
 export default MenuGlobe;

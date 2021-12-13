@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -143,7 +143,8 @@ const CountryInfoGen = styled.div`
   border-radius: 10px;
   background-color: var(--light-gray);
   width: 75%;
-  top: 50px;
+  margin-top: 25px;
+  margin-bottom: 25px;
   padding: 15px 20px 20px 20px;
   /* margin: 25px 15px 15px 15px; */
 `;

@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { UsersContext } from "./UsersContext";
 import MenuGlobe from "./MenuGlobe";
 import ReactTooltip from "react-tooltip";
 import { v4 as uuidv4 } from "uuid";
 
 import CategoriesWF from "./CategoriesWF";
 
-const Home = () => {
+const Home = (props) => {
   const [content, setContent] = useState(""); // -> state sets ToolTips content
   const [wfCateg, setWfcateg] = useState(""); // -> state sets current category, which sets in CategoriesWF
   const [wfCategName, setWfcategName] = useState(""); // -> state sets current category name, which sets in CategoriesWF
   const [wfCategUnits, setWfCategUnits] = useState(""); // -> state sets current category units, which sets in CategoriesWF
+  // const { reloadTrigger, setReloadTrigger } = props;
+  const { user, setUser } = useContext(UsersContext);
+
+  // useEffect(() => {
+  //   setReloadTrigger(!reloadTrigger);
+  // }, [user]);
 
   return (
     <Wrapper>

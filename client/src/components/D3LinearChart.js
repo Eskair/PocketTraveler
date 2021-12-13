@@ -11,7 +11,16 @@ const D3LinearChart = (props) => {
   useEffect(() => {
     setTitle(props.title);
     setUnits(props.units);
-    setData(props.dataset.filter((x) => x !== null));
+
+    // console.log(typeof props.dataset);
+    const fixedDataArr = props.dataset.map((x) => {
+      if (typeof x !== "number") {
+        return (x = 0);
+      } else {
+        return (x = x);
+      }
+    });
+    setData(fixedDataArr);
   }, []);
 
   useEffect(() => {
@@ -55,7 +64,7 @@ const D3LinearChart = (props) => {
         .tickFormat((d) => {
           return formatValue(d);
         });
-      console.log(data);
+
       svg
         .append("g")
         .call(xAxis)
@@ -75,7 +84,7 @@ const D3LinearChart = (props) => {
         .style("stroke-linecap", "round");
 
       const pathLength = path.node().getTotalLength();
-      const transitionPath = d3.transition().ease(d3.easeSin).duration(2500);
+      const transitionPath = d3.transition().ease(d3.easeSin).duration(3000);
 
       path
         .attr("stroke-dashoffset", pathLength)
@@ -110,7 +119,25 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin: 15px 0px 0px 15px;
-  background-color: var(--light-gray);
+  /* background-color: var(--light-gray); */
+  background: -moz-linear-gradient(
+    top,
+    #e1eaf0 0%,
+    #e1eaf0 57%,
+    #aeb6ba 100%
+  ); /* FF3.6-15 */
+  background: -webkit-linear-gradient(
+    top,
+    #e1eaf0 0%,
+    #e1eaf0 57%,
+    #aeb6ba 100%
+  ); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #e1eaf0 0%,
+    #e1eaf0 57%,
+    #aeb6ba 100%
+  ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   border-radius: 10px;
   width: 350px;
   height: 250px;

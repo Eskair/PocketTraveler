@@ -270,9 +270,54 @@ const getCountryInfoByYear = async (req, res) => {
   console.log("disconnected!");
 };
 
+const getUser = async (req, res) => {
+  const { email, password } = req.body;
+  const _id = email;
+
+  const client = new MongoClient(MONGO_URI, options);
+  await client.connect();
+
+  try {
+    const db = client.db("WorldFactbook");
+    console.log("connected!");
+    const userInfo = await db.collection("users").findOne({ _id });
+
+    if (!userInfo) {
+      res.status(404).json({ status: 404, message: "User Not Found" });
+    } else if (userInfo.userData.password !== password) {
+      res.status(404).json({ status: 404, message: "Wrong Password" });
+    } else {
+      const query = { _id };
+      const newValues = {
+        $set: {
+          "userData.isLoggedIn": true,
+        },
+      };
+
+      await db.collection("users").updateOne(query, newValues);
+
+      const userInfoUpdated = await db.collection("users").findOne({ _id });
+
+      res.status(200).json({
+        status: 200,
+        userSigned: {
+          first_name: userInfoUpdated.userData.first_name,
+          isLoggedIn: userInfoUpdated.userData.isLoggedIn,
+        },
+        message: "SignIn OK",
+      });
+    }
+  } catch (err) {
+    console.log(err.stack);
+  }
+  client.close();
+  console.log("disconnected!");
+};
+
 module.exports = {
   getCategories,
   getCountry,
   getCountryInfo,
   getCountryInfoByYear,
+  getUser,
 };

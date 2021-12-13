@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import * as d3 from "d3";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Modal from "react-modal";
 
 import CountryInfoDiv from "./CountryInfoDiv";
@@ -97,7 +97,7 @@ const CountryInfo = () => {
 
   const containerStyle = {
     width: "100%",
-    height: "400px",
+    height: "80%",
   };
 
   if (countryInfo !== null) {
@@ -119,17 +119,26 @@ const CountryInfo = () => {
       lng: parseInt(centerCoord[1]),
     };
 
+    let fixedName = "";
+
+    if (
+      conventional_long_form !== "none" &&
+      conventional_long_form.indexOf(";") !== -1
+    ) {
+      fixedName = conventional_long_form.substring(
+        0,
+        conventional_long_form.indexOf(";")
+      );
+    } else if (conventional_long_form === "none") {
+      fixedName = conventional_short_form;
+    } else {
+      fixedName = conventional_long_form;
+    }
+
     return (
       <WrapperDiv>
         <CountryNameDiv>
-          <HomeHead>
-            {conventional_long_form.indexOf(";") !== -1
-              ? conventional_long_form.substring(
-                  0,
-                  conventional_long_form.indexOf(";")
-                )
-              : conventional_long_form}
-          </HomeHead>
+          <HomeHead>{fixedName}</HomeHead>
           <ButtonSt onClick={toggleModal}>Historical Data</ButtonSt>
         </CountryNameDiv>
         <GoogleMap

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 
 import D3LinearChart from "./D3LinearChart";
 
 const GraphsModal = (props) => {
-  const [error, setError] = useState(false);
   const [graphData, setGraphData] = useState(null);
   const { toggleModal, clickedCountry } = props;
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetch(`/api/worldbook-year/${clickedCountry}`, {
@@ -112,8 +110,9 @@ const Wrapper = styled.div`
   background-color: var(--dark-blue);
   top: 0px;
   min-width: 1200px;
-  width: 100%;
+  width: 80%;
   height: 100%;
+  margin: auto;
   margin-top: 30px;
 `;
 

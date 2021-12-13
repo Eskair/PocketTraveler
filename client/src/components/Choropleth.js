@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
+
+import styled from "styled-components";
 import Modal from "react-modal";
 import {
   ComposableMap,
@@ -16,7 +16,7 @@ import CountryTopList from "./CountryTopList";
 
 const mapData = require("../assets/world-110m.json");
 const mapStyles = {
-  width: "600px",
+  width: "700px",
   height: "auto",
 };
 
@@ -239,7 +239,7 @@ const ButtonSt = styled.button`
   border-radius: 5px;
   color: var(--light-gray);
   font-size: 12px;
-  margin-top: 50px;
+  margin-top: 10px;
   color: #82cdff;
   padding-top: 6px;
   padding-bottom: 6px;

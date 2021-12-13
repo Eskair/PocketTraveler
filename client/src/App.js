@@ -1,32 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import GlobalStyles from "./components/GlobalStyles";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
+import { UsersContextProvider } from "./components/UsersContext";
 import CountryInfo from "./components/CountryInfo";
+import SignInPage from "./components/SignInPage";
 
 const App = () => {
+  // const [reloadTrigger, setReloadTrigger] = useState(false);
+  // console.log(reloadTrigger);
   return (
     <Wrapper>
       <GlobalStyles />
 
       <Router>
-        <Header />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route exact path="/:clickedCountry">
-            <CountryInfo />
-          </Route>
-          <Route exact path="/Notification"></Route>
-          <Route exact path="/Bookmarks"></Route>
-          <Route exact path="/:id"></Route>
-        </Switch>
-        <Footer />
+        <UsersContextProvider>
+          <Header
+          // setReloadTrigger={setReloadTrigger}
+          // reloadTrigger={reloadTrigger}
+          />
+          <Switch>
+            <Route exact path="/">
+              <Home
+              // setReloadTrigger={setReloadTrigger}
+              // reloadTrigger={reloadTrigger}
+              />
+            </Route>
+            <Route exact path="/:clickedCountry">
+              <CountryInfo />
+            </Route>
+            <Route exact path="/User/SignInPage">
+              <SignInPage />
+            </Route>
+          </Switch>
+          <Footer />
+        </UsersContextProvider>
       </Router>
     </Wrapper>
   );
@@ -42,7 +53,7 @@ const Wrapper = styled.div`
   min-width: 1000px;
 
   background-color: var(--dark-blue);
-  /* height: 100vh; */
+
   height: 100%;
 `;
 
