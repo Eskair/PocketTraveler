@@ -156,7 +156,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 30px;
 `;
 
 export default MenuGlobe;

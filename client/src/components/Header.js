@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import logo_PT from "../assets/logo_PT.svg";
 import { FaUserCircle } from "react-icons/fa";
 import { UsersContext } from "./UsersContext";
@@ -8,7 +8,7 @@ import { UsersContext } from "./UsersContext";
 const Header = (props) => {
   const { user, setUser } = useContext(UsersContext);
   const { reloadTrigger, setReloadTrigger } = props;
-
+  let history = useHistory();
   useEffect(() => {
     console.log("hello");
   }, [user]);
@@ -32,10 +32,18 @@ const Header = (props) => {
                 handleClick();
               }}
             >
-              Log Out
+              Sign Out
             </LogOutButton>
           ) : (
-            <HomeDivLink to="/User/SignInPage">Log In</HomeDivLink>
+            <LogOutButton
+              onClick={(e) => {
+                history.push("/User/SignInPage");
+              }}
+            >
+              Sign In
+            </LogOutButton>
+
+            // <HomeDivLink to="/User/SignInPage">Log In</HomeDivLink>
           )}
 
           <StDiv>{user ? <ProfileIcon /> : <ProfileIconInactive />}</StDiv>
@@ -69,6 +77,7 @@ const UserDiv = styled.div`
 const StDiv = styled.div`
   display: flex;
   width: 33px;
+  margin-left: 25px;
 `;
 
 const LogoImg = styled.img`
@@ -94,6 +103,7 @@ const ProfileIcon = styled(FaUserCircle)`
 
 const ProfileIconInactive = styled(FaUserCircle)`
   transform: scale(2, 2);
+
   opacity: 0.2;
   color: var(--dark-blue);
 `;
@@ -104,7 +114,7 @@ const LogOutButton = styled.button`
   font-size: 13px;
   color: var(--dark-blue);
   border: none;
-  margin-right: 25px;
+
   cursor: pointer;
 
   &:hover {

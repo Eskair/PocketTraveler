@@ -5,7 +5,7 @@ import D3LinearChart from "./D3LinearChart";
 
 const GraphsModal = (props) => {
   const [graphData, setGraphData] = useState(null);
-  const { toggleModal, clickedCountry } = props;
+  const { toggleModal, clickedCountry, fixedName } = props;
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,8 @@ const GraphsModal = (props) => {
       <Wrapper>
         <HeadDiv>
           <TopListButton onClick={toggleModal}>Close</TopListButton>
-          <HomeHead>Historical Data</HomeHead>
+          <HomeHead>{fixedName}</HomeHead>
+          <StyledPTwo>Historical Data (2007-2020)</StyledPTwo>
         </HeadDiv>
         <ChartDiv>
           <D3LinearChart title={"GDP PPP"} units={"USD"} dataset={yearsGdp} />
@@ -119,11 +120,8 @@ const Wrapper = styled.div`
 const HeadDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 80%;
+  width: 90%;
   border-bottom: 1px solid var(--light-gray);
-
-  margin-left: 25px;
-  margin-right: 25px;
   padding-bottom: 5px;
   align-items: flex-end;
 `;
@@ -148,10 +146,18 @@ const StyledP = styled.p`
   margin-left: 10px;
 `;
 
+const StyledPTwo = styled.p`
+  color: var(--light-gray);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  margin: 0;
+`;
+
 const HomeHead = styled.h1`
   font-family: var(--font-heading);
   color: var(--light-gray);
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 700;
   margin: 0;
 `;

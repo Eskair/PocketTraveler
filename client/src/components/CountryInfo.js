@@ -161,6 +161,7 @@ const CountryInfo = () => {
           <GraphsModal
             toggleModal={toggleModal}
             clickedCountry={clickedCountry}
+            fixedName={fixedName}
           />
         </Modal>
       </WrapperDiv>
@@ -212,7 +213,7 @@ const LoadingDiv = styled.div`
 const ButtonSt = styled.button`
   background-color: var(--bright-orange);
   border: 0px solid #aaa;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 12px;
   color: white;
   padding-top: 6px;

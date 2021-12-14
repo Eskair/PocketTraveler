@@ -98,12 +98,13 @@ const CountryInfoDiv = (props) => {
           <tbody>
             <tr>
               <td>
-                <TdSpan>National Anthem:</TdSpan>
+                <TdSpan>Time Difference:</TdSpan>
               </td>
               <td>
-                <StCountryLink to={`/${audio_url}`}>
+                {/* <StCountryLink to={`/${audio_url}`}>
                   National Anthem Audio
-                </StCountryLink>
+                </StCountryLink> */}
+                {time_difference.note}
               </td>
             </tr>
           </tbody>
