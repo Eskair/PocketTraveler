@@ -4,7 +4,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 const SignInPage = () => {
-  const { user } = useContext(UsersContext);
+  const { user, setUser } = useContext(UsersContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -28,12 +28,11 @@ const SignInPage = () => {
 
         if (data.status !== 200) {
           setError({ status: data.status, message: data.message });
-          // console.log(error);
         } else {
-          // setUser({
-          //   userSigned: data.userSigned.first_name,
-          //   isLoggedIn: data.userSigned.isLoggedIn,
-          // });
+          setUser({
+            userSigned: data.userSigned.first_name,
+            isLoggedIn: data.userSigned.isLoggedIn,
+          });
           sessionStorage.setItem("username", `${data.userSigned.first_name}`);
           history.push("/");
         }

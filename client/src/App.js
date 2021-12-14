@@ -10,7 +10,7 @@ import CountryInfo from "./components/CountryInfo";
 import SignInPage from "./components/SignInPage";
 
 const App = () => {
-  // const [reloadTrigger, setReloadTrigger] = useState(false);
+  const [reloadTrigger, setReloadTrigger] = useState(false);
   // console.log(reloadTrigger);
   return (
     <Wrapper>
@@ -19,8 +19,8 @@ const App = () => {
       <Router>
         <UsersContextProvider>
           <Header
-          // setReloadTrigger={setReloadTrigger}
-          // reloadTrigger={reloadTrigger}
+            setReloadTrigger={setReloadTrigger}
+            reloadTrigger={reloadTrigger}
           />
           <Switch>
             <Route exact path="/">

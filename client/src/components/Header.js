@@ -7,11 +7,11 @@ import { UsersContext } from "./UsersContext";
 
 const Header = (props) => {
   const { user, setUser } = useContext(UsersContext);
-  // const { reloadTrigger, setReloadTrigger } = props;
+  const { reloadTrigger, setReloadTrigger } = props;
 
-  // useEffect(() => {
-  //   setReloadTrigger(!reloadTrigger);
-  // }, [user]);
+  useEffect(() => {
+    console.log("hello");
+  }, [user]);
 
   const handleClick = (e) => {
     sessionStorage.removeItem("username");
