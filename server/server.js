@@ -8,6 +8,8 @@ const {
   getCountryInfo,
   getCountryInfoByYear,
   getUser,
+  postReview,
+  getReviews,
 } = require("./handlers");
 const PORT = 8000;
 
@@ -22,6 +24,8 @@ express()
   .get("/api/worldbook-country/:clickedCountry", getCountryInfo) // api to get a single country data assosiated. to clicked country
   .get("/api/worldbook-year/:clickedCountry", getCountryInfoByYear) // api to get a single country data by Year assosiated to clicked country
   .put("/api/worldbook-year/", getUser) // api to get a single user information
+  .post("/api/worldbook-reviews/", postReview) // api to post a review
+  .get("/api/worldbook-reviews/:clickedCountry", getReviews) // api to get a reviews
 
   .get("*", (req, res) => {
     res.status(404).json({

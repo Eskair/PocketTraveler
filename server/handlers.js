@@ -303,9 +303,62 @@ const getUser = async (req, res) => {
         userSigned: {
           first_name: userInfoUpdated.userData.first_name,
           isLoggedIn: userInfoUpdated.userData.isLoggedIn,
+          email: userInfoUpdated.userData.email,
         },
         message: "SignIn OK",
       });
+    }
+  } catch (err) {
+    console.log(err.stack);
+  }
+  client.close();
+  console.log("disconnected!");
+};
+
+const postReview = async (req, res) => {
+  // const { email, password } = req.body;
+  console.log(req.body);
+  const client = new MongoClient(MONGO_URI, options);
+  await client.connect();
+
+  try {
+    const db = client.db("WorldFactbook");
+    console.log("connected!");
+    const result = await db.collection("posts").insertOne(req.body);
+    res.status(201).json({ status: 201, data: req.body });
+  } catch (err) {
+    res.status(500).json({ status: 500, data: req.body, message: err.message });
+  }
+  client.close();
+  console.log("disconnected!");
+};
+
+const getReviews = async (req, res) => {
+  const { clickedCountry } = req.params;
+
+  const client = new MongoClient(MONGO_URI, options);
+  await client.connect();
+  try {
+    const db = client.db("WorldFactbook");
+    console.log("connected!");
+    const postsArr = await db.collection("posts").find().toArray();
+
+    const postsData = [];
+
+    postsArr.forEach((item) => {
+      if (clickedCountry === item.countryTag) {
+        postsData.push(item);
+      }
+    });
+    console.log(postsData);
+    if (postsData.length > 0) {
+      res.status(200).json({
+        status: 200,
+        postsData: postsData,
+        message: "Data Available",
+      });
+    } else {
+      res.status(404).json({ status: 404, message: "Nothing Found" });
     }
   } catch (err) {
     console.log(err.stack);
@@ -320,4 +373,6 @@ module.exports = {
   getCountryInfo,
   getCountryInfoByYear,
   getUser,
+  postReview,
+  getReviews,
 };

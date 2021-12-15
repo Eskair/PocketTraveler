@@ -4,7 +4,8 @@ import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
 const SignInPage = () => {
-  const { user, setUser } = useContext(UsersContext);
+  const { user, setUser, setCurrUser } = useContext(UsersContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -24,16 +25,18 @@ const SignInPage = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
         if (data.status !== 200) {
           setError({ status: data.status, message: data.message });
         } else {
-          setUser({
+          setUser(data.userSigned.first_name);
+
+          setCurrUser({
             userSigned: data.userSigned.first_name,
             isLoggedIn: data.userSigned.isLoggedIn,
+            email: data.userSigned.email,
           });
           sessionStorage.setItem("username", `${data.userSigned.first_name}`);
+          sessionStorage.setItem("email", `${data.userSigned.email}`);
           history.push("/");
         }
       });
@@ -102,7 +105,7 @@ const FormWrapper = styled.div`
   background-color: #214f74;
   width: 270px;
 
-  border-radius: 25px;
+  border-radius: 10px;
 `;
 
 const FormSignIn = styled.form`
@@ -116,7 +119,7 @@ const InputSt = styled.input`
   border-width: 0px;
   padding: 10px;
   border: 0px solid white;
-  border-radius: 10px;
+  border-radius: 7px;
   background-color: white;
   font-family: Roboto Condensed;
   font-weight: 400;
@@ -138,7 +141,7 @@ const InputSt = styled.input`
 const SubmitButt = styled.button`
   margin-top: 15px;
   margin-bottom: 15px;
-  border-radius: 10px;
+  border-radius: 7px;
   text-decoration: none;
   padding: 8px 20px;
   background-color: var(--light-blue);

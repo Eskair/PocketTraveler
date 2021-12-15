@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import * as d3 from "d3";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Modal from "react-modal";
-
+import { UsersContext } from "./UsersContext";
 import CountryInfoDiv from "./CountryInfoDiv";
 import GraphsModal from "./GraphsModal";
 
@@ -13,10 +13,13 @@ const CountryInfo = () => {
   const [countryInfo, setcountryInfo] = useState(null);
   const [centerCoord, setCenterCoord] = useState([0, 0]);
   const [error, setError] = useState(false);
+  const { user } = useContext(UsersContext);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
   });
+
+  let history = useHistory();
 
   // -------------------------------------------------------------- React Modal
   const [isOpen, setIsOpen] = useState(false);
@@ -139,7 +142,21 @@ const CountryInfo = () => {
       <WrapperDiv>
         <CountryNameDiv>
           <HomeHead>{fixedName}</HomeHead>
-          <ButtonSt onClick={toggleModal}>Historical Data</ButtonSt>
+          <ButtonDiv>
+            {user ? (
+              <ButtonSt
+                onClick={(e) => {
+                  history.push(`/User/ReviewsPage/${clickedCountry}`);
+                }}
+              >
+                Notes
+              </ButtonSt>
+            ) : (
+              ""
+            )}
+
+            <ButtonSt onClick={toggleModal}>Historical Data</ButtonSt>
+          </ButtonDiv>
         </CountryNameDiv>
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -220,11 +237,17 @@ const ButtonSt = styled.button`
   padding-bottom: 6px;
   padding-left: 15px;
   padding-right: 15px;
-  margin: 10px 45px 10px 0px;
+  margin: 10px 0px 10px 10px;
   outline: none;
   cursor: pointer;
   &:hover {
     background-color: #d01e08;
   }
 `;
+
+const ButtonDiv = styled.div`
+  display: flex;
+  margin-right: 50px;
+`;
+
 export default CountryInfo;

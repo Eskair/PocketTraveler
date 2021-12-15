@@ -100,12 +100,7 @@ const CountryInfoDiv = (props) => {
               <td>
                 <TdSpan>Time Difference:</TdSpan>
               </td>
-              <td>
-                {/* <StCountryLink to={`/${audio_url}`}>
-                  National Anthem Audio
-                </StCountryLink> */}
-                {time_difference.note}
-              </td>
+              <td>{time_difference.note}</td>
             </tr>
           </tbody>
           <tbody>
@@ -147,7 +142,6 @@ const CountryInfoGen = styled.div`
   margin-top: 25px;
   margin-bottom: 25px;
   padding: 15px 20px 20px 20px;
-  /* margin: 25px 15px 15px 15px; */
 `;
 
 const StP = styled.p`
@@ -190,13 +184,6 @@ const TdSpan = styled.span`
   font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
-`;
-
-const StCountryLink = styled(Link)`
-  color: var(--dark-blue);
-  font-size: 13px;
-  font-family: var(--font-body);
-  text-decoration: none;
 `;
 
 export default CountryInfoDiv;

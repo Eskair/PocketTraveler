@@ -8,10 +8,11 @@ import Footer from "./components/Footer";
 import { UsersContextProvider } from "./components/UsersContext";
 import CountryInfo from "./components/CountryInfo";
 import SignInPage from "./components/SignInPage";
+import ReviewsPage from "./components/ReviewsPage";
 
 const App = () => {
   const [reloadTrigger, setReloadTrigger] = useState(false);
-  // console.log(reloadTrigger);
+
   return (
     <Wrapper>
       <GlobalStyles />
@@ -24,16 +25,16 @@ const App = () => {
           />
           <Switch>
             <Route exact path="/">
-              <Home
-              // setReloadTrigger={setReloadTrigger}
-              // reloadTrigger={reloadTrigger}
-              />
+              <Home />
             </Route>
             <Route exact path="/:clickedCountry">
               <CountryInfo />
             </Route>
             <Route exact path="/User/SignInPage">
               <SignInPage />
+            </Route>
+            <Route exact path="/User/ReviewsPage/:clickedCountry">
+              <ReviewsPage />
             </Route>
           </Switch>
           <Footer />

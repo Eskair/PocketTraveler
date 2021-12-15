@@ -7,8 +7,9 @@ import { UsersContext } from "./UsersContext";
 
 const Header = (props) => {
   const { user, setUser } = useContext(UsersContext);
-  const { reloadTrigger, setReloadTrigger } = props;
+  // const { reloadTrigger, setReloadTrigger } = props;
   let history = useHistory();
+
   useEffect(() => {
     console.log("hello");
   }, [user]);
@@ -16,6 +17,7 @@ const Header = (props) => {
   const handleClick = (e) => {
     sessionStorage.removeItem("username");
     setUser(null);
+    history.push("/");
   };
 
   return (
@@ -42,8 +44,6 @@ const Header = (props) => {
             >
               Sign In
             </LogOutButton>
-
-            // <HomeDivLink to="/User/SignInPage">Log In</HomeDivLink>
           )}
 
           <StDiv>{user ? <ProfileIcon /> : <ProfileIconInactive />}</StDiv>
