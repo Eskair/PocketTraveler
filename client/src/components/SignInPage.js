@@ -3,6 +3,8 @@ import { UsersContext } from "./UsersContext";
 import { useHistory, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
+import Logo_PT_big from "../assets/Logo_PT_big.svg";
+
 const SignInPage = () => {
   const { user, setUser, setCurrUser } = useContext(UsersContext);
 
@@ -53,6 +55,7 @@ const SignInPage = () => {
   if (!user) {
     return (
       <Wrapper>
+        <LogoSvg alt="logo Img" src={Logo_PT_big} />
         <FormWrapper>
           <FormSignIn onSubmit={HandleSubmit}>
             <InputSt
@@ -88,7 +91,7 @@ const SignInPage = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
   width: 100%;
@@ -172,6 +175,14 @@ const ErrorDiv = styled.div`
   font-weight: 400;
   font-size: 15px;
   color: #3a5671;
+`;
+
+const LogoSvg = styled.img`
+  width: 300px;
+  opacity: 0.2;
+
+  margin-top: 100px;
+  margin-bottom: 50px;
 `;
 
 export default SignInPage;

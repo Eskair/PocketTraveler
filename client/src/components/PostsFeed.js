@@ -5,9 +5,11 @@ import { v4 as uuidv4 } from "uuid";
 import { UsersContext } from "./UsersContext";
 
 const PostsFeed = ({ clickedCountry, newPost }) => {
-  const { user, currUser, email } = useContext(UsersContext);
+  const { user } = useContext(UsersContext);
   const [newFeed, setNewFeed] = useState(null);
   const [error, setError] = useState(false);
+
+  // Get All posts related to clicked country
 
   useEffect(() => {
     fetch(`/api/worldbook-reviews/${clickedCountry}`, {
@@ -20,6 +22,7 @@ const PostsFeed = ({ clickedCountry, newPost }) => {
       .then((data) => {
         if (data.status !== 200) {
           setError({ status: data.status, message: data.message });
+          console.log(error);
         } else {
           setNewFeed(data.postsData);
         }

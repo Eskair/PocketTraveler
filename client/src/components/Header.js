@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import styled from "styled-components";
 import { NavLink, useHistory } from "react-router-dom";
 import logo_PT from "../assets/logo_PT.svg";
 import { FaUserCircle } from "react-icons/fa";
 import { UsersContext } from "./UsersContext";
 
-const Header = (props) => {
+const Header = () => {
   const { user, setUser } = useContext(UsersContext);
-  // const { reloadTrigger, setReloadTrigger } = props;
+
   let history = useHistory();
 
   useEffect(() => {

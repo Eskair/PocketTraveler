@@ -74,6 +74,7 @@ const Choropleth = (props) => {
           if (data.status !== 200) {
             setError({ status: data.status, message: data.message });
             setChoroplethData([]);
+            console.log(error);
           } else {
             setChoroplethData(data.categoryData);
           }

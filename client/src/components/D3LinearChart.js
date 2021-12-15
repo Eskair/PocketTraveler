@@ -12,7 +12,6 @@ const D3LinearChart = (props) => {
     setTitle(props.title);
     setUnits(props.units);
 
-    // console.log(typeof props.dataset);
     const fixedDataArr = props.dataset.map((x) => {
       if (typeof x !== "number") {
         return (x = 0);

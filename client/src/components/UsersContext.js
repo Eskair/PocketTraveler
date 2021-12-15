@@ -13,7 +13,6 @@ export const UsersContextProvider = ({ children }) => {
     setEmail(sessionStValueTwo);
   }, []);
 
-  console.log(user);
   return (
     <UsersContext.Provider
       value={{ user, setUser, setCurrUser, currUser, email }}

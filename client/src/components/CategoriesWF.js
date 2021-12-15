@@ -19,6 +19,7 @@ const CategoriesWF = (props) => {
       .then((data) => {
         if (data.status !== 200) {
           setError({ status: data.status, message: data.message });
+          console.log(error);
         } else {
           setCategories(data.categories);
         }

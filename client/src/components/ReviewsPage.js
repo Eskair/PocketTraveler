@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { useParams, useHistory, NavLink } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import Moment from "moment";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { UsersContext } from "./UsersContext";
 import PostsFeed from "./PostsFeed";
 
 const ReviewsPage = () => {
-  const { user, currUser, email } = useContext(UsersContext);
+  const { user, email } = useContext(UsersContext);
   const [error, setError] = useState(false);
   const [newPost, setNewPost] = useState("");
   const { clickedCountry } = useParams();
-
-  let history = useHistory();
 
   useEffect(() => {
     console.log("hello");
@@ -28,10 +26,8 @@ const ReviewsPage = () => {
 
     setNewPost("");
   };
-
+  // submit a new post
   const onSubmit = (newPost) => {
-    console.log(email, clickedCountry, user, newPost);
-
     fetch("/api/worldbook-reviews/", {
       method: "POST",
       body: JSON.stringify({
@@ -53,6 +49,7 @@ const ReviewsPage = () => {
           setError(false);
         } else if (status !== 200) {
           setError(message);
+          console.log(error);
         }
       });
   };
@@ -109,13 +106,6 @@ const BlogDiv = styled.div`
   overflow: auto;
 `;
 
-const LoadingP = styled.p`
-  font-family: var(--font-body);
-  font-size: 15px;
-  color: #004e82;
-  margin-top: 200px;
-`;
-
 const HeadDiv = styled.div`
   position: relative;
   display: flex;
@@ -136,11 +126,6 @@ const HomeHead = styled.h1`
   padding-right: 15px;
   background-color: var(--bright-orange);
   border-radius: 10px;
-`;
-const LoadingDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 100%;
 `;
 
 const ButtonSt = styled.button`
